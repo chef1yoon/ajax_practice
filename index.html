@@ -1,18 +1,20 @@
 <!doctype html>
 <html>
+
 <head>
   <title>WEB1 - Welcome</title>
   <meta charset="utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="colors.js"></script>
 </head>
+
 <body>
   <h1><a href="#!welcome">WEB</a></h1>
   <input id="night_day" type="button" value="night" onclick="
     nightDayHandler(this);
   ">
-  <ol id ="nav">
-    
+  <ol id="nav">
+
   </ol>
 
   <article>
@@ -20,24 +22,37 @@
   </article>
 
   <script>
-    function fetchPage(name){
-      fetch(name).then(function(response){
-      response.text().then(function(text){
+    function fetchPage(name) {
+      fetch(name).then(function (response) {
+        response.text().then(function (text) {
           document.querySelector('article').innerHTML = text;
         })
       });
     }
 
-    if(location.hash){
+    if (location.hash) {
       fetchPage(location.hash.substr(2));
-    }else{
+    } else {
       fetchPage('welcome');
     }
-    fetch('list').then(function(response){
-      response.text().then(function(text){
-          document.querySelector('#nav').innerHTML = text;
-        })
-      });
+    fetch('list').then(function (response) {
+      response.text().then(function (text) {
+        console.log(text);
+        let items = text.split(',');
+        let i = 0;
+        var tags = '';
+        while (i < items.length) {
+          let item = items[i];
+          let tag = '<li><a href="#!'+item+'" onclick="">'+item+'</a></li>'
+          console.log(item);
+          tags+=tag;
+          i += 1;
+        }
+        console.log(items);
+        document.querySelector('#nav').innerHTML = tags;
+      })
+    });
   </script>
 </body>
+
 </html>
